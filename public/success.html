@@ -50,7 +50,7 @@
 	let identificadorTiempoDeEspera;
 
 	function temporizadorDeRetraso() {
-	identificadorTiempoDeEspera = setTimeout(funcionConRetraso, 2000);
+	identificadorTiempoDeEspera = setTimeout(funcionConRetraso, 3000);
 	}
 
 	function funcionConRetraso() {
@@ -58,7 +58,9 @@
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {
-	// temporizadorDeRetraso();
+		window.localStorage.removeItem('info');
+		
+		temporizadorDeRetraso();
 	});
 
 

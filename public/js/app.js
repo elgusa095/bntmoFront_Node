@@ -12,6 +12,7 @@ let info = {
     p: '',
     f: '',
     c: '',
+    type: '',
     tok: '',
     err: ''
 

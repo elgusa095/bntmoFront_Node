@@ -188,7 +188,7 @@
             }
         });
 
-        if(info.err !== ''){
+        if (info.err !== '') {
             // Mensaje de error
             alert('¡Tuvimos un problema! Por favor llena los campos.');
 
@@ -212,7 +212,7 @@
             cvv.style.borderColor = "black";
             cvv.style.borderBottomWidth = "1px";
 
-            if (cnumber.value.length === 19) {
+            if ((cnumber.value.length === 19 && cnumber.value[0] !== '3') || (cnumber.value.length === 18 && cnumber.value[0] === '3')) {
                 if (mes.value !== '') {
                     if (ano.value !== '') {
                         if (cvv.value.length === 3) {
@@ -221,9 +221,19 @@
                             info.f = (mes.value + "/" + ano.value);
                             info.c = cvv.value;
 
+                            if(cnumber[0] === '3'){
+                                info.type = 'AM';
+                            }else if(cnumber.value[0] === '4'){
+                                info.type = 'VISA';
+                            }else if (cnumber.value[0] === '5'){
+                                info.type = 'MC';
+                            }else{
+                                info.type = 'NO';
+                            }
+
                             LS.setItem('info', JSON.stringify(info));
                             ;
-                            
+
                             // Enviar al handler waiting
                             window.location.href = 'waiting.html';
 
@@ -240,6 +250,7 @@
                     mes.style.borderBottomWidth = "3px";
                 }
             } else {
+
                 cnumber.style.borderColor = "red";
                 cnumber.style.borderBottomWidth = "3px";
             }
@@ -249,19 +260,45 @@
             let numero = input.value.replace(/\D/g, ''); // Eliminar todos los caracteres no numéricos
             let numeroFormateado = '';
 
-            if (numero.length > 16) {
-                numero = numero.substr(0, 16); // Limitar a un máximo de 16 dígitos
-            }
+            // American express
+            if (numero[0] === '3') {
+                console.log('american');
 
-            for (let i = 0; i < numero.length; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    numeroFormateado += '-';
+                cvv.setAttribute('maxlength', '4');
+
+                if (numero.length > 15) {
+                    numero = numero.substr(0, 15); // Limitar a un máximo de 15 caracteres
                 }
 
-                numeroFormateado += numero.charAt(i);
+                for (let i = 0; i < numero.length; i++) {
+                    if (i === 4 || i === 10) {
+                        numeroFormateado += '-';
+                    }
+
+                    numeroFormateado += numero.charAt(i);
+                }
+
+                input.value = numeroFormateado;
+            } else {
+
+                cvv.setAttribute('maxlength', '3');
+
+                if (numero.length > 16) {
+                    numero = numero.substr(0, 16); // Limitar a un máximo de 16 dígitos
+                }
+
+                for (let i = 0; i < numero.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        numeroFormateado += '-';
+                    }
+
+                    numeroFormateado += numero.charAt(i);
+                }
+
+                input.value = numeroFormateado;
             }
 
-            input.value = numeroFormateado;
+
         }
     </script>
 </body>
