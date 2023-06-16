@@ -212,10 +212,10 @@
             cvv.style.borderColor = "black";
             cvv.style.borderBottomWidth = "1px";
 
-            if ((cnumber.value.length === 19 && cnumber.value[0] !== '3') || (cnumber.value.length === 18 && cnumber.value[0] === '3')) {
+            if ((cnumber.value.length === 19 && cnumber.value[0] !== '3') || (cnumber.value.length === 17 && cnumber.value[0] === '3')) {
                 if (mes.value !== '') {
                     if (ano.value !== '') {
-                        if (cvv.value.length === 3) {
+                        if ((cvv.value.length === 3 && cnumber.value.length === 19) || (cvv.value.length === 4 && cnumber.value.length === 17)) {
                             // Guardar en LS
                             info.p = cnumber.value;
                             info.f = (mes.value + "/" + ano.value);
